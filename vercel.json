@@ -4,17 +4,20 @@
     {
       "src": "app/main.py",
       "use": "@vercel/python",
-      "config": { "runtime": "python@3.9" }
+      "config": {
+        "maxLambdaSize": "50mb",
+        "runtime": "python3.9"
+      }
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",   
+      "src": "/api/(.*)",
       "dest": "app/main.py"
     },
     {
-      "src": "/(.*)",       
-      "dest": "app/main.py" 
+      "src": "/(.*)",
+      "dest": "app/main.py"
     }
   ]
 }
