@@ -1,5 +1,6 @@
 import os
 import httpx
+# import asyncio
 import json
 import re
 import zipfile
@@ -58,6 +59,7 @@ async def get_openai_response(question: str, file_path: Optional[str] = None) ->
         # If the result looks like a JSON object (starts with {), try to get the hash directly
         if result.startswith("{") and result.endswith("}"):
             try:
+                # import httpx
 
                 async with httpx.AsyncClient() as client:
                     response = await client.post(
@@ -97,11 +99,11 @@ async def get_openai_response(question: str, file_path: Optional[str] = None) ->
     ) and file_path:
         from app.utils.functions import process_encoded_files
 
-        # Extract the target symbols from the question - use the correct symbols
-        target_symbols = [
-            '"',
-            "†",
-            "Ž",
+        # Extract the target š OR — OR ˜ symbols from the question - use the correct symbols
+        target_symbols = [ 
+            'š',
+            "—",
+            "˜",
         ]  # These are the symbols mentioned in the question
 
         # Process the files
@@ -1432,6 +1434,19 @@ async def get_openai_response(question: str, file_path: Optional[str] = None) ->
                     answer = await count_json_key_occurrences(
                         file_path=function_args.get("file_path"),
                         target_key=function_args.get("target_key"),
+                    )
+                elif function_name == "generate_duckdb_query":
+                    answer = await generate_duckdb_query(
+                        query_type=function_args.get("query_type"),
+                        timestamp_filter=function_args.get("timestamp_filter"),
+                        numeric_filter=function_args.get("numeric_filter"),
+                        sort_order=function_args.get("sort_order"),
+                    )
+                elif function_name == "transcribe_youtube_segment":
+                    answer = await transcribe_youtube_segment(
+                        youtube_url=function_args.get("youtube_url"),
+                        start_time=function_args.get("start_time"),
+                        end_time=function_args.get("end_time"),
                     )
                 elif function_name == "reconstruct_scrambled_image":
                     answer = await reconstruct_scrambled_image(
