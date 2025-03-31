@@ -1433,19 +1433,6 @@ async def get_openai_response(question: str, file_path: Optional[str] = None) ->
                         file_path=function_args.get("file_path"),
                         target_key=function_args.get("target_key"),
                     )
-                elif function_name == "generate_duckdb_query":
-                    answer = await generate_duckdb_query(
-                        query_type=function_args.get("query_type"),
-                        timestamp_filter=function_args.get("timestamp_filter"),
-                        numeric_filter=function_args.get("numeric_filter"),
-                        sort_order=function_args.get("sort_order"),
-                    )
-                elif function_name == "transcribe_youtube_segment":
-                    answer = await transcribe_youtube_segment(
-                        youtube_url=function_args.get("youtube_url"),
-                        start_time=function_args.get("start_time"),
-                        end_time=function_args.get("end_time"),
-                    )
                 elif function_name == "reconstruct_scrambled_image":
                     answer = await reconstruct_scrambled_image(
                         image_path=function_args.get("image_path"),
