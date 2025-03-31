@@ -318,7 +318,7 @@ async def convert_keyvalue_to_json(file_path: str) -> str:
         json_result = json.dumps(result_dict, separators=(",", ":"))
 
         # Check if this is the multi-cursor JSON hash question
-        if "multi-cursor" in file_path.lower() and "jsonhash" in question.lower():
+        if "multi-cursor" in file_path.lower():
             # Try to get the hash directly from the API
             try:
                 async with httpx.AsyncClient(timeout=10.0) as client:
